@@ -2,6 +2,8 @@
 module.exports = function(RED) {
     "use strict";
     var reconnect = RED.settings.mysqlReconnectTime || 20000;
+    var acquireTimeout = RED.settings.mysqlAcquireTime || 10000;
+    var connectTimeout = RED.settings.mysqlConnectTime || 10000;
     var mysqldb = require('mysql');
 
     function MySQLNode(n) {
@@ -43,7 +45,9 @@ module.exports = function(RED) {
                     insecureAuth: true,
                     multipleStatements: true,
                     connectionLimit: 25,
-                    charset: node.charset
+                    charset: node.charset,
+                    acquireTimeout: acquireTimeout,
+                    connectTimeout: connectTimeout
                 });
             }
 
